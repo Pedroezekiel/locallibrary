@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Author: {{ author.first_name }} {{author.last_name}}</h1>
+   {{author.date_of_birth}}
+        {% if author.date_of_death %}
+            ({{author.date_of_death}})
+        {% else %}
+            -till date
+        {% endif %}
+  {% comment %} <p><strong>Summary:</strong> {{ book.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Language:</strong> {{ book.language }}</p>
+  <p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p> {% endcomment %}
+
+  <div style="margin-left:20px;margin-top:20px">
+    <h4>Books</h4>
+    {% comment %} {{% Book.author %}} {% endcomment %}
+    {% comment %} {% for a in book.author%}
+      <p>a</p> {% endcomment %}
+      {% comment %} <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'm' %}text-danger{% else %}text-warning{% endif %}">
+        {{ copy.get_status_display }}
+      </p>
+      {% if copy.status != 'a' %}
+        <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
+      {% endif %}
+      <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
+      <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p> {% endcomment %}
+    {% comment %} {% endfor %} {% endcomment %}
+  </div>
+{% endblock %}
