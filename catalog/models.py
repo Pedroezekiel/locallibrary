@@ -1,8 +1,8 @@
 from django.db import models
-
+import uuid # Required for unique book instances
 # Create your models here.
 from django.db import models
-
+from django.urls import reverse # Used to generate URLs by reversing the URL patterns
 # Create your models here.
 class Genre(models.Model):
     """Model representing a book genre."""
@@ -11,7 +11,13 @@ class Genre(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return self.name
-from django.urls import reverse # Used to generate URLs by reversing the URL patterns
+
+    name = models.CharField(max_length=200, help_text='Enter the book language (e.g. English)')
+class Language(models.Model):
+    
+    def __str__(self):
+        return self.name
+
 
 class Book(models.Model):
     """Model representing a book (but not a specific copy of a book)."""
@@ -28,6 +34,7 @@ class Book(models.Model):
     # ManyToManyField used because genre can contain many books. Books can cover many genres.
     # Genre class has already been defined so we can specify the object above.
     genre = models.ManyToManyField(Genre, help_text='Select a genre for this book')
+    language = models.ManyToManyField(Language)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -36,7 +43,14 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the URL to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
-import uuid # Required for unique book instances
+    
+    def display_genre(self):
+        """Create a string for the Genre. This is required to display genre in Admin."""
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+
+    display_genre.short_description = 'Genre'
+
+
 
 class BookInstance(models.Model):
     """Model representing a specific copy of a book (i.e. that can be borrowed from the library)."""
