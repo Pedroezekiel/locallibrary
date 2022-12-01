@@ -15,6 +15,14 @@
 
   <div style="margin-left:20px;margin-top:20px">
     <h4>Books</h4>
+
+    {% for i in books %}
+      {% if i.author == author %}
+          {% i %}
+      {% else %}
+        {% pass %}  
+      {% endif %}
+    {% endfor%}
     {% comment %} {{% Book.author %}} {% endcomment %}
     {% comment %} {% for a in book.author%}
       <p>a</p> {% endcomment %}
