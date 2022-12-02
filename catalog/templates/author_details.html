@@ -16,11 +16,10 @@
   <div style="margin-left:20px;margin-top:20px">
     <h4>Books</h4>
 
-    {% for i in books %}
-      {% if i.author == author %}
-          {% i %}
-      {% else %}
-        {% pass %}  
+    {% for book in books %}
+      {% if book.author == author %}
+          <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+          <p>{{ book.summary}}</p>
       {% endif %}
     {% endfor%}
     {% comment %} {{% Book.author %}} {% endcomment %}
